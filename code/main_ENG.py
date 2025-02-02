@@ -190,7 +190,7 @@ def main( page: Page ):
 
     # container for content
     contentContainer = Container(
-        width = 390,
+        width = 375,
         height = 540,
         padding = padding.only( left = 75, right = 75 ),
         bgcolor = '#444A4B',
