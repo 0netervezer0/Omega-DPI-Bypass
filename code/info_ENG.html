@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Manual</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #33A3AD;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #33A3AD;
+            margin-top: 20px;
+        }
+        p {
+            margin: 10px 0;
+        }
+        a {
+            color: #33A3AD;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        ul {
+            list-style: disc inside;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Lupi DPI Launcher User Guide</h1>
+    </header>
+    <div class="container">
+        <h2>Key points</h2>
+        <ul>
+            <li>The program executable file must be located in the same folder where the DPI folder is located.</li>
+            <li>The program requires administrator rights because it interacts with the network and the system firewall.</li>
+            <li>This version is only applicable to Windows 7 and above.</li>
+            <li>The program is not a VPN service, it does not affect the IP address of your device in any way.</li>
+        </ul>
+        <h2>Scheme of work with the program</h2>
+        <ul>
+            <li>The "Launch DPI Bypass" button will launch the winws.exe subroutine, which will open as a terminal. You cannot close the terminal, otherwise it will interrupt the program.</li>
+            <li>After opening the terminal, the main program window can be closed. To stop the program, use the "Stop DPI Bypass" button in the main menu or simply close the terminal.</li>
+            <li>The main program menu also includes the "Open DPI Folder" and "Open Address List" buttons for working with files and address list.</li>
+            <li>The "Install Bypass Service" button will install the service, namely, it will start the DPI bypass service in the background process and add it to your system startup, after installing the service you will no longer need to manually start the DPI bypass.</li>
+            <li>The "Remove Bypass Service" button will remove the previously installed service, this must be done if you are going to reinstall the installed service.</li>
+        </ul>
+        <h2>Developers and license</h2>
+        <ul>
+            <li>The program is a completely open-source product. Links to GitHub are available below.</li>
+            <li>The program and its source code use the <a href="https://en.wikipedia.org/wiki/MIT_License">MIT.</a> license.</li>
+        </ul>
+        <h2>Links</h2>
+        <ul>
+            <li><a href="https://github.com/0netervezer0/Lupi-DPI-Laucnher">Launcher Repository</a></li>
+            <li><a href="https://github.com/ValdikSS/GoodbyeDPI">DPI Client Repository</a></li>
+            <li><a href="https://github.com/0netervezer0?tab=repositories">Developer - Netervezer</a></li>
+            <li><a href="https://github.com/ValdikSS">Developer - ValdikSS</a></li>
+        </ul>
+    </div>
+</body>
+</html>
