@@ -2,21 +2,116 @@
 # LupiDPI ( Windows Edition ) V1.3
 # by netervezer
 # #######################
-
+import os
 from os import system
 from elevate import elevate
 from subprocess import call
 from flet import FilledButton, Dropdown, Container, Page, ButtonStyle, RoundedRectangleBorder, Text, \
-    FontWeight, dropdown, padding, Column, Row, app
+    FontWeight, dropdown, padding, Column, Row, app, icons
+
+translations = {
+    'ru': {
+        'title': 'Lupi DPI',
+        'lang': 'Русский',
+        'start_button': 'Запустить Обход DPI',
+        'install_button': 'Установить Службу',
+        'remove_button': 'Удалить Службу',
+        'warning': 'Это окно можно закрыть, но не закрывайте открывшийся терминал!',
+        'stop_button': 'Остановить Обход',
+        'open_folder_button': 'Открыть Папку DPI',
+        'open_general_button': 'Открыть Список Адресов',
+        'info_button': 'Руководство',
+        'alt_start': 'Параметры Запуска',
+        'alt1': 'Alt Запуск 1',
+        'alt2': 'Alt Запуск 2',
+        'alt3': 'Alt Запуск 3',
+        'alt4': 'Alt Запуск 4',
+        'alt5': 'Alt Запуск 5',
+        'iran': 'Стандартный Запуск (Иран)',
+        'default': 'Стандартный Запуск'
+    },
+    'en': {
+        'title': 'Lupi DPI',
+        'lang': 'English',
+        'start_button': 'Start DPI Bypass',
+        'install_button': 'Install Service',
+        'remove_button': 'Remove Service',
+        'warning': 'You can close this window, but do not close the terminal that opened!',
+        'stop_button': 'Stop Bypass',
+        'open_folder_button': 'Open DPI Folder',
+        'open_general_button': 'Open Address List',
+        'info_button': 'Guide',
+        'alt_start': 'Start Options',
+        'alt1': 'Alt Start 1',
+        'alt2': 'Alt Start 2',
+        'alt3': 'Alt Start 3',
+        'alt4': 'Alt Start 4',
+        'alt5': 'Alt Start 5',
+        'iran': 'Default Start (Iran)',
+        'default': 'Default Start'
+    },
+    'fa': {
+        'title': 'Lupi DPI',
+        'lang': 'فارسی',
+        'start_button': 'شروع دور زدن DPI',
+        'install_button': 'نصب سرویس',
+        'remove_button': 'حذف سرویس',
+        'warning': 'شما می توانید این پنجره را ببندید، اما ترمینال باز شده را نبندید!',
+        'stop_button': 'متوقف کردن دور زدن',
+        'open_folder_button': 'باز کردن پوشه DPI',
+        'open_general_button': 'باز کردن لیست آدرس ها',
+        'info_button': 'راهنما',
+        'alt_start': 'گزینه های شروع',
+        'alt1': 'Alt شروع 1',
+        'alt2': 'Alt شروع 2',
+        'alt3': 'Alt شروع 3',
+        'alt4': 'Alt شروع 4',
+        'alt5': 'Alt شروع 5',
+        'iran': 'شروع پیش فرض (ایران)',
+        'default': 'شروع پیش فرض'
+    }
+}
+
 
 elevate( show_console = False )
+def update_text( language ):
+    return translations[language]
+
 def main( page: Page ):
 
     page.window.resizable = False
     page.window.width = 400
-    page.window.height = 540
-    page.title = 'Lupi DPI'
-    page.window.icon = 'icon.ico'
+    page.window.height = 580
+    page.title = 'Lupi DPI Bypass'
+
+    selected_language = 'en'
+    text = update_text( selected_language )
+
+    def change_language( e ):
+        nonlocal selected_language
+        selected_language = e.control.value
+        text = update_text( selected_language )
+
+        StartBTN.text = text[ 'start_button' ]
+        InstallBTN.text = text[ 'install_button' ]
+        RemoveBTN.text = text[ 'remove_button' ]
+        WarningLabel.text = text[ 'warning' ]
+        StopBTN.text = text[ 'stop_button' ]
+        OpenBTN.text = text[ 'open_folder_button' ]
+        ChangeGeneralBTN.text = text[ 'open_general_button' ]
+        InfoBTN.text = text[ 'info_button' ]
+        LanguageDropdown.label = text[ 'lang' ]
+        AltStarts.label = text[ 'alt_start' ]
+        AltStarts.options = [
+            dropdown.Option( key = 'default', text = text[ 'default' ] ),
+            dropdown.Option( key = 'iran', text = text[ 'iran' ] ),
+            dropdown.Option( key = 'alt1', text = text[ 'alt1' ] ),
+            dropdown.Option( key = 'alt2', text = text[ 'alt2' ] ),
+            dropdown.Option( key = 'alt3', text = text[ 'alt3' ] ),
+            dropdown.Option( key = 'alt4', text = text[ 'alt4' ] ),
+            dropdown.Option( key = 'alt5', text = text[ 'alt5' ] ),
+        ]
+        page.update()
 
     def OpenInfo( e = None ):
         call( 'info.html', shell = True )
@@ -25,16 +120,18 @@ def main( page: Page ):
         call( 'explorer.exe DPI', shell = True )
 
     def Start( e = None ):
-        if AltStarts.value == 'Alt Запуск 1':
-            system('cd DPI & general (ALT1).bat')
-        elif AltStarts.value == 'Alt Запуск 2':
-            system('cd DPI & general (ALT2).bat')
-        elif AltStarts.value == 'Alt Запуск 3':
-            system('cd DPI & general (ALT3).bat')
-        elif AltStarts.value == 'Alt Запуск 4':
-            system('cd DPI & general (ALT4).bat')
-        elif AltStarts.value == 'Alt Запуск 5':
-            system('cd DPI & general (ALT5).bat')
+        if AltStarts.value == 'alt1':
+            system('cd DPI & alt1.bat')
+        elif AltStarts.value == 'alt2':
+            system('cd DPI & alt2.bat')
+        elif AltStarts.value == 'alt3':
+            system('cd DPI & alt3.bat')
+        elif AltStarts.value == 'alt4':
+            system('cd DPI & alt4.bat')
+        elif AltStarts.value == 'alt5':
+            system('cd DPI & alt5.bat')
+        elif AltStarts.value == 'iran':
+            system('cd DPI & iran.bat')
         else:
             system('cd DPI & general.bat')
         contentContainer.content.controls.remove( StartBTN )
@@ -47,14 +144,19 @@ def main( page: Page ):
         contentContainer.content.controls.remove( OpenBTN )
         contentContainer.content.controls.remove( ChangeGeneralBTN )
         contentContainer.content.controls.remove( InfoBTN )
+        contentContainer.content.controls.remove( LanguageDropdown )
         contentContainer.content.controls.append( StopBTN )
         contentContainer.content.controls.append( WarningLabel )
         contentContainer.content.controls.append( empty1 )
         contentContainer.content.controls.append( InfoBTN )
+        contentContainer.content.controls.append( LanguageDropdown )
         page.update()
 
     def Stop( e = None ):
-        system( 'taskkill /IM winws.exe /F' )
+        try:
+            system( 'taskkill /IM winws.exe /F' )
+        except:
+            pass
         contentContainer.content.controls.remove( StopBTN )
         contentContainer.content.controls.remove( empty1 )
         contentContainer.content.controls.remove( WarningLabel )
@@ -69,28 +171,38 @@ def main( page: Page ):
         contentContainer.content.controls.append( ChangeGeneralBTN )
         contentContainer.content.controls.append( empty3 )
         contentContainer.content.controls.append( InfoBTN )
+        contentContainer.content.controls.append( LanguageDropdown )
         page.update()
 
     def OpenGeneral( e = None ):
-        pass
         system( 'cd DPI & list-general.txt' )
 
     def Install( e = None ):
-        pass
         system( 'cd DPI & start service_install.bat' )
 
     def Remove( e = None ):
-        pass
         system( 'cd DPI & start service_remove.bat' )
 
     empty1 = Container( height = 16 )
     empty2 = Container( height = 16 )
     empty3 = Container( height = 16 )
 
+    LanguageDropdown = Dropdown(
+        label = text[ 'lang' ],
+        border_color = '#33A3AD',
+        border_radius = 10,
+        width = 300,
+        height = 50,
+        options = [
+            dropdown.Option( key = 'ru', text = 'Русский' ),
+            dropdown.Option( key = 'en', text = 'English' ),
+            dropdown.Option( key = 'fa', text = 'فارسی' ),
+        ],
+        on_change = change_language
+    )
 
-    # buttons
     StartBTN = FilledButton(
-        text = 'Запустить DPI',
+        text = text[ 'start_button' ],
         width = 300,
         height = 50,
         style = ButtonStyle(
@@ -101,7 +213,7 @@ def main( page: Page ):
     )
 
     InstallBTN = FilledButton(
-        text = 'Установить Службу DPI',
+        text = text[ 'install_button' ],
         width = 300,
         height = 40,
         style = ButtonStyle(
@@ -112,7 +224,7 @@ def main( page: Page ):
     )
 
     RemoveBTN = FilledButton(
-        text = 'Удалить Службу DPI',
+        text = text[ 'remove_button' ],
         width = 300,
         height = 40,
         style = ButtonStyle(
@@ -123,13 +235,13 @@ def main( page: Page ):
     )
 
     WarningLabel = Text(
-        "Это окно можно закрыть, не закрывайте открывшийся терминал!",
+        text[ 'warning' ],
         color = '#C6C6C6',
         weight = FontWeight.BOLD
     )
 
     StopBTN = FilledButton(
-        text = 'Остановить DPI',
+        text = text[ 'stop_button' ],
         width = 300,
         height = 40,
         style = ButtonStyle(
@@ -140,7 +252,7 @@ def main( page: Page ):
     )
 
     OpenBTN = FilledButton(
-        text = 'Открыть Папку DPI',
+        text = text[ 'open_folder_button' ],
         width = 300,
         height = 35,
         style = ButtonStyle(
@@ -151,7 +263,7 @@ def main( page: Page ):
     )
 
     ChangeGeneralBTN = FilledButton(
-        text = 'Открыть Список Адресов',
+        text = text[ 'open_general_button' ],
         width = 300,
         height = 35,
         style = ButtonStyle(
@@ -162,7 +274,7 @@ def main( page: Page ):
     )
 
     InfoBTN = FilledButton(
-        text = 'Руководство',
+        text = text[ 'info_button' ],
         width = 300,
         height = 35,
         style = ButtonStyle(
@@ -175,24 +287,25 @@ def main( page: Page ):
     AltStarts = Dropdown(
         border_color = '#33A3AD',
         border_radius = 10,
-        label = 'Параметры Запуска',
+        label = text[ 'alt_start' ],
         width = 300,
         height = 50,
         options = [
-            dropdown.Option( 'Стандартный Запуск' ),
-            dropdown.Option( 'Alt Запуск 1' ),
-            dropdown.Option( 'Alt Запуск 2' ),
-            dropdown.Option( 'Alt Запуск 3' ),
-            dropdown.Option( 'Alt Запуск 4' ),
-            dropdown.Option( 'Alt Запуск 5' ),
-        ]
+            dropdown.Option( key = 'default', text = text['default'] ),
+            dropdown.Option( key = 'iran', text = text['iran'] ),
+            dropdown.Option( key = 'alt1', text = text['alt1'] ),
+            dropdown.Option( key = 'alt2', text = text['alt2'] ),
+            dropdown.Option( key = 'alt3', text = text['alt3'] ),
+            dropdown.Option( key = 'alt4', text = text['alt4'] ),
+            dropdown.Option( key = 'alt5', text = text['alt5'] ),
+        ],
     )
 
     # container for content
     contentContainer = Container(
         width = 375,
-        height = 540,
-        padding = padding.only( left = 75, right = 75 ),
+        height = 580,
+        padding = padding.only( left = 55, right = 55 ),
         bgcolor = '#444A4B',
         border_radius = 10,
         content = Column( alignment = 'center',
@@ -206,7 +319,8 @@ def main( page: Page ):
                        OpenBTN,
                        ChangeGeneralBTN,
                        empty3,
-                       InfoBTN
+                       InfoBTN,
+                       LanguageDropdown
                    ]
                 )
     )
@@ -227,8 +341,6 @@ def main( page: Page ):
     ###
     page.add( mainContainer )
     page.update()
-
-    pass
 
 
 if __name__ == '__main__':
