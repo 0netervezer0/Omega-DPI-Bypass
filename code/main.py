@@ -1,14 +1,18 @@
 # #######################
-# LupiDPI ( Windows Edition ) V1.3
+# LupiDPI ( Windows Edition ) V1.4.1
 # by netervezer
 # #######################
-import os
+import locale
+import ctypes
+import psutil
 from os import system
 from elevate import elevate
 from subprocess import call
+from tkinter.messagebox import showerror
 from flet import FilledButton, Dropdown, Container, Page, ButtonStyle, RoundedRectangleBorder, Text, \
-    FontWeight, dropdown, padding, Column, Row, app, icons
+    FontWeight, dropdown, padding, Column, Row, app
 
+windll = ctypes.windll.kernel32
 translations = {
     'ru': {
         'title': 'Lupi DPI',
@@ -28,7 +32,7 @@ translations = {
         'alt4': 'Alt Запуск 4',
         'alt5': 'Alt Запуск 5',
         'iran': 'Стандартный Запуск (Иран)',
-        'default': 'Стандартный Запуск'
+        'default': 'Стандартный Запуск',
     },
     'en': {
         'title': 'Lupi DPI',
@@ -48,7 +52,8 @@ translations = {
         'alt4': 'Alt Start 4',
         'alt5': 'Alt Start 5',
         'iran': 'Default Start (Iran)',
-        'default': 'Default Start'
+        'default': 'Default Start',
+        'error_t': 'Error',
     },
     'fa': {
         'title': 'Lupi DPI',
@@ -68,7 +73,8 @@ translations = {
         'alt4': 'Alt شروع 4',
         'alt5': 'Alt شروع 5',
         'iran': 'شروع پیش فرض (ایران)',
-        'default': 'شروع پیش فرض'
+        'default': 'شروع پیش فرض',
+        'error_t': 'خطا',
     }
 }
 
@@ -84,7 +90,12 @@ def main( page: Page ):
     page.window.height = 580
     page.title = 'Lupi DPI Bypass'
 
-    selected_language = 'en'
+    if locale.windows_locale[ windll.GetUserDefaultUILanguage() ][:2] == 'fa':
+        selected_language = 'fa'
+    elif locale.windows_locale[ windll.GetUserDefaultUILanguage() ][:2] == 'ru':
+        selected_language = 'ru'
+    else:
+        selected_language = 'en'
     text = update_text( selected_language )
 
     def change_language( e ):
@@ -120,37 +131,52 @@ def main( page: Page ):
         call( 'explorer.exe DPI', shell = True )
 
     def Start( e = None ):
-        if AltStarts.value == 'alt1':
-            system('cd DPI & alt1.bat')
-        elif AltStarts.value == 'alt2':
-            system('cd DPI & alt2.bat')
-        elif AltStarts.value == 'alt3':
-            system('cd DPI & alt3.bat')
-        elif AltStarts.value == 'alt4':
-            system('cd DPI & alt4.bat')
-        elif AltStarts.value == 'alt5':
-            system('cd DPI & alt5.bat')
-        elif AltStarts.value == 'iran':
-            system('cd DPI & iran.bat')
+        A = []
+        for proc in psutil.process_iter():
+            name = proc.name()
+            A.append( name )
+        if 'winws.exe' in A:
+            if selected_language == 'en':
+                showerror( title = 'Error',
+                           message = 'You already have DPI bypass service installed!\nPlease remove it first before starting a new one!' )
+            elif selected_language == 'ru':
+                showerror( title = 'Ошибка',
+                          message = 'У вас уже установлена служба обхода DPI!\nСперва удалите её, прежде чем запустить новую!' )
+            else:
+                showerror( title = 'خطا',
+                          message = 'شما قبلاً سرویس بای پس DPI را نصب کرده اید!\n' 'لطفاً قبل از شروع یک مورد جدید، ابتدا آن را حذف کنید!' )
         else:
-            system('cd DPI & general.bat')
-        contentContainer.content.controls.remove( StartBTN )
-        contentContainer.content.controls.remove( empty1 )
-        contentContainer.content.controls.remove( empty2 )
-        contentContainer.content.controls.remove( AltStarts )
-        contentContainer.content.controls.remove( InstallBTN )
-        contentContainer.content.controls.remove( RemoveBTN )
-        contentContainer.content.controls.remove( empty3 )
-        contentContainer.content.controls.remove( OpenBTN )
-        contentContainer.content.controls.remove( ChangeGeneralBTN )
-        contentContainer.content.controls.remove( InfoBTN )
-        contentContainer.content.controls.remove( LanguageDropdown )
-        contentContainer.content.controls.append( StopBTN )
-        contentContainer.content.controls.append( WarningLabel )
-        contentContainer.content.controls.append( empty1 )
-        contentContainer.content.controls.append( InfoBTN )
-        contentContainer.content.controls.append( LanguageDropdown )
-        page.update()
+            if AltStarts.value == 'alt1':
+                system( 'cd DPI & alt1.bat' )
+            elif AltStarts.value == 'alt2':
+                system( 'cd DPI & alt2.bat' )
+            elif AltStarts.value == 'alt3':
+                system( 'cd DPI & alt3.bat' )
+            elif AltStarts.value == 'alt4':
+                system( 'cd DPI & alt4.bat' )
+            elif AltStarts.value == 'alt5':
+                system( 'cd DPI & alt5.bat' )
+            elif AltStarts.value == 'iran':
+                system( 'cd DPI & iran.bat' )
+            else:
+                system( 'cd DPI & general.bat' )
+            contentContainer.content.controls.remove( StartBTN )
+            contentContainer.content.controls.remove( empty1 )
+            contentContainer.content.controls.remove( empty2 )
+            contentContainer.content.controls.remove( AltStarts )
+            contentContainer.content.controls.remove( InstallBTN )
+            contentContainer.content.controls.remove( RemoveBTN )
+            contentContainer.content.controls.remove( empty3 )
+            contentContainer.content.controls.remove( OpenBTN )
+            contentContainer.content.controls.remove( ChangeGeneralBTN )
+            contentContainer.content.controls.remove( InfoBTN )
+            contentContainer.content.controls.remove( LanguageDropdown )
+            contentContainer.content.controls.append( StopBTN )
+            contentContainer.content.controls.append( WarningLabel )
+            contentContainer.content.controls.append( empty1 )
+            contentContainer.content.controls.append( InfoBTN )
+            contentContainer.content.controls.append( LanguageDropdown )
+            page.update()
 
     def Stop( e = None ):
         try:
@@ -161,6 +187,7 @@ def main( page: Page ):
         contentContainer.content.controls.remove( empty1 )
         contentContainer.content.controls.remove( WarningLabel )
         contentContainer.content.controls.remove( InfoBTN )
+        contentContainer.content.controls.remove( LanguageDropdown )
         contentContainer.content.controls.append( StartBTN )
         contentContainer.content.controls.append( AltStarts )
         contentContainer.content.controls.append( empty1 )
@@ -194,8 +221,8 @@ def main( page: Page ):
         width = 300,
         height = 50,
         options = [
-            dropdown.Option( key = 'ru', text = 'Русский' ),
             dropdown.Option( key = 'en', text = 'English' ),
+            dropdown.Option( key = 'ru', text = 'Русский' ),
             dropdown.Option( key = 'fa', text = 'فارسی' ),
         ],
         on_change = change_language
