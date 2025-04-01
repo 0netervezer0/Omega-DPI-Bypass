@@ -1,6 +1,10 @@
-<h1 align="center">Lupi DPI Bypass</h1>
-<h2 align="center">Launcher for automating DPI bypass | Лаунчер для автоматизации обхода DPI</h2>
-<h2 align="center"><a href="https://github.com/0netervezer0/Lupi-DPI/releases/tag/1.4.1">Download the latest release (English/Русский/فارسی)(Windows)</a></h2>
-<h3 align="center">Лаунчер позволяет быстро и интуитивно понятно запустить обход DPI. Идеален для снятия физического ограничения на посещение таких адресов, как youtube.com или discord.com.</h3>
-<h3 align="center">The launcher allows you to quickly and intuitively launch a DPI bypass script. Ideal for removing the physical restriction on visiting addresses such as youtube.com or discord.com.</h3>
-<h3 align="center">لانچر به شما اجازه می دهد تا به سرعت و به طور مستقیم بای پس DPI را راه اندازی کنید. ایده آل برای از بین بردن محدودیت های فیزیکی برای بازدید از آدرس هایی مانند youtube.com یا discord.com.</h3>
+# Lupi DPI Bypass
+## A simple and convenient tool for bypassing DPI
+#### [Русский (Russian) 🇷🇺](https://github.com/0netervezer0/Lupi-DPI-Bypass/blob/main/README_ru.md)  |  [فارسی (Persian) 🇮🇷](https://github.com/0netervezer0/Lupi-DPI-Bypass/blob/main/README_fa.md)
+It will help you get rid of blocking of YouTube or Discord in such countries as Russia, Iran and other countries where these services are blocked by DPI technology.
+> ### [Download]()
+## Problems that may arise during installation
+#### False positive antivirus
+Since Lupi DPI Bypass is rarely downloaded, it may not be listed in many antivirus databases as safe. Also, the antivirus may be triggered because the program is interpreted, not compiled.
+
+The developer guarantees the safety of installation and use of the program. If you do not trust the file compiled by the developer, you can compile the program yourself. All source files are provided in the repository.
