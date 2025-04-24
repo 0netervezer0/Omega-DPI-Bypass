@@ -1,8 +1,8 @@
-# Lupi DPI Bypass
+# Omega DPI Bypass
 ## A simple and convenient tool for bypassing DPI on Windows
-#### [Русский (Russian) 🇷🇺](https://github.com/0netervezer0/Lupi-DPI-Bypass/blob/main/README_ru.md)  |  [فارسی (Persian) 🇮🇷](https://github.com/0netervezer0/Lupi-DPI-Bypass/blob/main/README_fa.md)
+#### [Русский (Russian) 🇷🇺](https://github.com/0netervezer0/Omega-DPI-Bypass/blob/main/README_ru.md)  |  [فارسی (Persian) 🇮🇷](https://github.com/0netervezer0/Omega-DPI-Bypass/blob/main/README_fa.md)
 It will help you get rid of blocking of YouTube or Discord in such countries as Russia, Iran and other countries where these services are blocked by DPI technology.
-> ### [Download](https://github.com/0netervezer0/Lupi-DPI-Bypass/releases/tag/2.0.3-(ENG))
+> ### [Download](https://github.com/0netervezer0/Omega-DPI-Bypass/releases/tag/2.1)
 ## Problems that may arise during installation
 #### False positive antivirus
 Since Lupi DPI Bypass is rarely downloaded, it may not be listed in many antivirus databases as safe.
