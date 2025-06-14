@@ -9,6 +9,7 @@ import (
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
+	"golang.org/x/sys/windows"
 )
 
 const (
@@ -25,56 +26,133 @@ var (
     procMessageBoxW  = user32.NewProc( "MessageBoxW" )
 )
 
+type LocaleStrings struct {
+    WindowTitle       string
+    LaunchButton      string
+    ParameterSelect   string
+    InstallService    string
+    UninstallService  string
+    OpenFolder        string
+    OpenAddressList   string
+    OpenGuide         string
+    Parameters        []string
+    ErrorSelectParam  string
+}
+
+var (
+    currentLocale *LocaleStrings
+    russianLocale = &LocaleStrings{
+        WindowTitle:      "Omega DPI Bypass",
+        LaunchButton:     "Запустить DPI Bypass",
+        ParameterSelect:  "Параметры Запуска",
+        InstallService:   "Установить Службу",
+        UninstallService: "Удалить Службу",
+        OpenFolder:       "Открыть BIN Папку",
+        OpenAddressList:  "Открыть Список Адресов",
+        OpenGuide:        "Руководство Пользователя",
+        Parameters:       []string{ "Стандартный (Россия)", "Стандартный (Иран)" },
+        ErrorSelectParam: "Выберите Параметры Запуска!",
+    }
+    persianLocale = &LocaleStrings{
+        WindowTitle:      "Omega DPI Bypass",
+        LaunchButton:     "اجرای DPI Bypass",
+        ParameterSelect:  "پارامترهای اجرا",
+        InstallService:   "نصب سرویس",
+        UninstallService: "حذف سرویس",
+        OpenFolder:       "باز کردن پوشه فایل ها",
+        OpenAddressList:  "باز کردن لیست آدرس ها",
+        OpenGuide:        "راهنمای کاربر",
+        Parameters:       []string{ "پیش فرض (روسیه)", "پیش فرض (ایران)" },
+        ErrorSelectParam: "پارامترهای اجرا را انتخاب کنید!",
+    }
+    englishLocale = &LocaleStrings{
+        WindowTitle:      "Omega DPI Bypass",
+        LaunchButton:     "Launch DPI Bypass",
+        ParameterSelect:  "Launch Parameters",
+        InstallService:   "Install Service",
+        UninstallService: "Uninstall Service",
+        OpenFolder:       "Open Binaries Folder",
+        OpenAddressList:  "Open Address List",
+        OpenGuide:        "User Guide",
+        Parameters:       []string{ "Default (Russia)", "Default (Iran)" },
+        ErrorSelectParam: "Select Launch Parameters!",
+    }
+)
+
+func getSystemLanguage() *LocaleStrings {
+    kernel32 := windows.NewLazySystemDLL( "kernel32.dll" )
+    getUserDefaultLocaleName := kernel32.NewProc( "GetUserDefaultLocaleName" )
+    
+    var localeName [85]uint16
+    ret, _, _ := getUserDefaultLocaleName.Call(
+        uintptr( unsafe.Pointer( &localeName[0] )),
+        uintptr( len( localeName )),
+    )
+    
+    if ret == 0 {
+        return englishLocale
+    }
+    
+    locale := syscall.UTF16ToString( localeName[:] )
+    switch {
+    case locale == "ru-RU" || locale == "ru":
+        return russianLocale
+    case locale == "fa-IR" || locale == "fa":
+        return persianLocale
+    default:
+        return englishLocale
+    }
+}
+
 func main() {
+    currentLocale = getSystemLanguage()
+    
 	APP := app.New()
     APP.Settings().SetTheme( &MinimalDarkTheme{} )
     APP.SetIcon( resourceIconPng )
 
-	Window := APP.NewWindow( "Omega DPI Bypass" )
-	Window.Resize( fyne.NewSize( 300, 438 ))
+	Window := APP.NewWindow( currentLocale.WindowTitle )
+	Window.Resize( fyne.NewSize( 300, 438 )) 
 	Window.SetFixedSize( true ) 
 
 	var selected_parameter string
 
 	launch_button := widget.NewButton(
-        "Launch DPI Bypass",
+        currentLocale.LaunchButton,
         func() { StartBypass( selected_parameter )},
     )
-	launch_button.Resize( fyne.NewSize( 260, 46 ))
+	launch_button.Resize( fyne.NewSize( 260, 46 )) 
 	launch_button.Move( fyne.NewPos( 20, 20 )) 
 
 	parameter_select := widget.NewSelect(
-		[]string {
-			"Default (Russia)",
-			"Default (Iran)",
-		},
+		currentLocale.Parameters,
 		func( selected string ) {
 			selected_parameter = selected;
 		},
 	)
-	parameter_select.PlaceHolder = "Launch Parameters"
-	parameter_select.Resize( fyne.NewSize( 260, 40 ))
-	parameter_select.Move( fyne.NewPos( 20, 72 ))
+	parameter_select.PlaceHolder = currentLocale.ParameterSelect
+	parameter_select.Resize( fyne.NewSize( 260, 40 )) 
+	parameter_select.Move( fyne.NewPos( 20, 72 )) 
     
-    installS_button := widget.NewButton( "Install Service", InstallService )
-    installS_button.Resize( fyne.NewSize( 260, 40 ))
+    installS_button := widget.NewButton( currentLocale.InstallService, InstallService )
+    installS_button.Resize( fyne.NewSize( 260, 40 )) 
 	installS_button.Move( fyne.NewPos( 20, 140 )) 
     
-    uninstallS_button := widget.NewButton( "Uninstall Service", UninstallService )
-    uninstallS_button.Resize( fyne.NewSize( 260, 40 ))
-	uninstallS_button.Move( fyne.NewPos( 20, 186 ))
+    uninstallS_button := widget.NewButton( currentLocale.UninstallService, UninstallService )
+    uninstallS_button.Resize( fyne.NewSize( 260, 40 )) 
+	uninstallS_button.Move( fyne.NewPos( 20, 186 )) 
     
-    openFolder_button := widget.NewButton( "Open Binaries Folder", OpenFolder )
-    openFolder_button.Resize( fyne.NewSize( 260, 40 ))
+    openFolder_button := widget.NewButton( currentLocale.OpenFolder, OpenFolder )
+    openFolder_button.Resize( fyne.NewSize( 260, 40 )) 
 	openFolder_button.Move( fyne.NewPos( 20, 254 )) 
     
-    openAddressList_button := widget.NewButton( "Open Address List", OpenAddressList )
-    openAddressList_button.Resize( fyne.NewSize( 260, 40 ))
-	openAddressList_button.Move( fyne.NewPos( 20, 300 ))
+    openAddressList_button := widget.NewButton( currentLocale.OpenAddressList, OpenAddressList )
+    openAddressList_button.Resize( fyne.NewSize( 260, 40 )) 
+	openAddressList_button.Move( fyne.NewPos( 20, 300 )) 
     
-    openGuide_button := widget.NewButton( "User Guide", OpenGuide )
-    openGuide_button.Resize( fyne.NewSize( 260, 40 ))
-	openGuide_button.Move( fyne.NewPos( 20, 368 ))
+    openGuide_button := widget.NewButton( currentLocale.OpenGuide, OpenGuide )
+    openGuide_button.Resize( fyne.NewSize( 260, 40 )) 
+	openGuide_button.Move( fyne.NewPos( 20, 368 )) 
     
 
 	main_container := container.NewWithoutLayout(
@@ -104,14 +182,14 @@ func MessageBox( parent uintptr, caption, title string, flags uint32 ) int {
 
 func StartBypass( parameter string ) {
     switch parameter {
-    case "Default (Russia)":
+    case "Default (Russia)", "Стандартный (Россия)", "پیش فرض (روسیه)":
         cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "russia.bat" )
         cmd.Run()
-    case "Default (Iran)":
+    case "Default (Iran)", "Стандартный (Иран)", "پیش فرض (ایران)":
         cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "iran.bat" )
         cmd.Run()
     default:
-        MessageBox( 0, "Select Launch Parameters!", "Error", MB_ICONERROR )
+        MessageBox( 0, currentLocale.ErrorSelectParam, "Error", MB_ICONERROR )
     }
 }
 
