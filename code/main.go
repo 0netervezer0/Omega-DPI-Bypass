@@ -192,7 +192,7 @@ func MessageBox( parent uintptr, caption, title string, flags uint32 ) int {
 func StartBypass( parameter string ) {
     switch parameter {
     case "Default (Russia)", "Стандартный (Россия)", "پیش فرض (روسیه)":
-        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "russia.bat" )
+        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "general.bat" )
         cmd.Run()
     case "Default (Iran)", "Стандартный (Иран)", "پیش فرض (ایران)":
         cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "iran.bat" )
@@ -234,14 +234,6 @@ func StartBypass( parameter string ) {
     case "Ru TLS Auto 3":
         cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&",
                              "general (FAKE TLS AUTO ALT2)" )
-        cmd.Run()
-    case "MGTS 1":
-        cmd := exec.Command( "cmd", "/C", "cd", "DPI/alts", "&&",
-                             "general (МГТС1)" )
-        cmd.Run()
-    case "MGTS 2":
-        cmd := exec.Command( "cmd", "/C", "cd", "DPI/alts", "&&",
-                             "general (МГТС2)" )
         cmd.Run()
     default:
         MessageBox( 0, currentLocale.ErrorSelectParam, "Error", MB_ICONERROR )
