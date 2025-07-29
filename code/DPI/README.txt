@@ -1,1 +1,0 @@
-*** You can find the DPI folder content in the last release ***
