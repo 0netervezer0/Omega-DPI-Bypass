@@ -52,8 +52,7 @@ var (
         OpenGuide:        "Руководство Пользователя",
         Parameters:       []string{ "Стандартный (Россия)", "Стандартный (Иран)", "Альтернативный РФ 1", "Альтернативный РФ 2", 
                             "Альтернативный РФ 3", "Альтернативный РФ 4", "Альтернативный РФ 5", "Альтернативный РФ 6", 
-                            "Ru Fake TLS", "Ru Fake TLS ALT", "Ru TLS Auto 1", "Ru TLS Auto 2", 
-                            "MGTS 1", "MGTS 2" },
+                            "Ru Fake TLS", "Ru Fake TLS ALT", "Ru TLS Auto" },
         ErrorSelectParam: "Выберите Параметры Запуска!",
     }
     persianLocale = &LocaleStrings{
@@ -67,8 +66,7 @@ var (
         OpenGuide:        "راهنمای کاربر",
         Parameters:       []string{ "پیش فرض (روسیه)", "پیش فرض (ایران)", "Alt Russia 1", "Alt Russia 2", 
                             "Alt Russia 3", "Alt Russia 4", "Alt Russia 5", "Alt Russia 6", 
-                            "Ru Fake TLS", "Ru Fake TLS ALT", "Ru TLS Auto 1", "Ru TLS Auto 2", 
-                            "MGTS 1", "MGTS 2" },
+                            "Ru Fake TLS", "Ru Fake TLS ALT", "Ru TLS Auto" },
         ErrorSelectParam: "پارامترهای اجرا را انتخاب کنید!",
     }
     englishLocale = &LocaleStrings{
@@ -82,8 +80,7 @@ var (
         OpenGuide:        "User Guide",
         Parameters:       []string{ "Default (Russia)", "Default (Iran)", "Alt Russia 1", "Alt Russia 2", 
                             "Alt Russia 3", "Alt Russia 4", "Alt Russia 5", "Alt Russia 6", 
-                            "Ru Fake TLS", "Ru Fake TLS ALT", "Ru TLS Auto 1", "Ru TLS Auto 2", 
-                            "MGTS 1", "MGTS 2" },
+                            "Ru Fake TLS", "Ru Fake TLS ALT", "Ru TLS Auto" },
         ErrorSelectParam: "Select Launch Parameters!",
     }
 )
@@ -198,42 +195,34 @@ func StartBypass( parameter string ) {
         cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "iran.bat" )
         cmd.Run()
     case "Alt Russia 1", "Альтернативный РФ 1":
-        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "general (ALT1)" )
+        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "\"general (ALT1).bat\"" )
         cmd.Run()
     case "Alt Russia 2", "Альтернативный РФ 2":
-        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "general (ALT2)" )
+        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "\"general (ALT2).bat\"" )
         cmd.Run()
     case "Alt Russia 3", "Альтернативный РФ 3":
-        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "general (ALT3)" )
+        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "\"general (ALT3).bat\"" )
         cmd.Run()
     case "Alt Russia 4", "Альтернативный РФ 4":
-        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "general (ALT4)" )
+        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "\"general (ALT4).bat\"" )
         cmd.Run()
     case "Alt Russia 5", "Альтернативный РФ 5":
-        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "general (ALT5)" )
+        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "\"general (ALT5).bat\"" )
         cmd.Run()
     case "Alt Russia 6", "Альтернативный РФ 6":
-        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "general (ALT6" )
+        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "\"general (ALT6).bat\"" )
         cmd.Run()
     case "Ru Fake TLS":
         cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&",
-                             "general (FAKE TLS)" )
+                             "\"general (FAKE TLS).bat\"" )
         cmd.Run()
     case "Ru Fake TLS ALT":
         cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", 
-                             "general (FAKE TLS ALT)" )
+                             "\"general (FAKE TLS ALT).bat\"" )
         cmd.Run()
-    case "Ru TLS Auto 1":
+    case "Ru TLS Auto":
         cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&",
-                             "general (FAKE TLS AUTO)" )
-        cmd.Run()
-    case "Ru TLS Auto 2":
-        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&",
-                             "general (FAKE TLS AUTO ALT1)" )
-        cmd.Run()
-    case "Ru TLS Auto 3":
-        cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&",
-                             "general (FAKE TLS AUTO ALT2)" )
+                             "\"general (FAKE TLS AUTO).bat\"" )
         cmd.Run()
     default:
         MessageBox( 0, currentLocale.ErrorSelectParam, "Error", MB_ICONERROR )
@@ -256,7 +245,7 @@ func OpenFolder() {
 }
 
 func OpenAddressList() {
-    cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "start", "", "notepad", "list-general.txt" )
+    cmd := exec.Command( "cmd", "/C", "cd", "DPI/lists", "&&", "start", "", "notepad", "list-general.txt" )
     cmd.Run()
 }
 
