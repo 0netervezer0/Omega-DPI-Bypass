@@ -4,10 +4,10 @@
 It will help you get rid of blocking of YouTube or Discord in such countries as Russia, Iran and other countries where these services are blocked by DPI technology.
 > ### [Download](https://github.com/0netervezer0/Omega-DPI-Bypass/releases/tag/2.2.2)
 ## Problems that may arise during installation
-#### False positive antivirus
-Since Omega DPI Bypass is rarely downloaded, it may not be listed in many antivirus databases as safe.
-
-The developer guarantees the safety of installation and use of the program. If you do not trust the file builded by the developer, you can build the program yourself. All source files are provided in the repository.
+> [!CAUTION]
+> #### False positive antivirus
+> Since Omega DPI Bypass is rarely downloaded, it may not be listed in many antivirus databases as safe.
+> The developer guarantees the safety of installation and use of the program. If you do not trust the file builded by the developer, you can build the program yourself. All source files are provided in the repository.
 ## Author of binaries
 Huge thanks to [bol-van](https://github.com/bol-van) for winws and other binaries to bypass DPI.
 [Link to repository](https://github.com/bol-van/zapret).
