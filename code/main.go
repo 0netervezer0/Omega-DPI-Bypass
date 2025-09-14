@@ -1,3 +1,5 @@
+// build:  go build -ldflags="-s -w -H=windowsgui" -o Omega_DPI_Bypass.exe
+
 package main
 
 import (
@@ -39,6 +41,7 @@ type LocaleStrings struct {
     ErrorSelectParam  string
 }
 
+// dictionary for multilangual support
 var (
     currentLocale *LocaleStrings
     russianLocale = &LocaleStrings{
@@ -85,6 +88,7 @@ var (
     }
 )
 
+// function to get system language
 func getSystemLanguage() *LocaleStrings {
     kernel32 := windows.NewLazySystemDLL( "kernel32.dll" )
     getUserDefaultLocaleName := kernel32.NewProc( "GetUserDefaultLocaleName" )
@@ -110,6 +114,8 @@ func getSystemLanguage() *LocaleStrings {
     }
 }
 
+
+// main function
 func main() {
     currentLocale = getSystemLanguage()
     
@@ -175,6 +181,7 @@ func main() {
 	Window.ShowAndRun()
 }
 
+// function to cause the message box
 func MessageBox( parent uintptr, caption, title string, flags uint32 ) int {
     result, _, _ := procMessageBoxW.Call(
         parent,
@@ -184,8 +191,8 @@ func MessageBox( parent uintptr, caption, title string, flags uint32 ) int {
     )
     return int( result )
 }
- 
 
+// function to start bypass service
 func StartBypass( parameter string ) {
     switch parameter {
     case "Default (Russia)", "Стандартный (Россия)", "پیش فرض (روسیه)":
@@ -229,27 +236,33 @@ func StartBypass( parameter string ) {
     }
 }
 
+// function to install bypass service
 func InstallService() {
     cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "start", "", "service_install.bat" )
     cmd.Run()
 }
 
+// function to uninstall bypass service
 func UninstallService() {
     cmd := exec.Command( "cmd", "/C", "cd", "DPI", "&&", "start", "", "service_uninstall.bat" )
     cmd.Run()
 }
 
+// function to open the folder with binary files
 func OpenFolder() {
     cmd := exec.Command( "cmd", "/C", "explorer.exe", "DPI", )
     cmd.Run()
 }
 
+// function to open the file with list of addresses
 func OpenAddressList() {
     cmd := exec.Command( "cmd", "/C", "cd", "DPI/lists", "&&", "start", "", "notepad", "list-general.txt" )
     cmd.Run()
 }
 
+// function to open .html file with user guide
 func OpenGuide() {
     cmd := exec.Command( "cmd", "/C", "cd", "guides", "&&", "start", "", "guide.html" )
     cmd.Run()
 }
+
