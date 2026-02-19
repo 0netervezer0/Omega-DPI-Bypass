@@ -1,4 +1,4 @@
-# Omega DPI Bypass
+# Omega DPI Bypass (НЕ АКТУАЛЬНО)
 ## Простой и удобный инструмент для обхода DPI на Windows
 #### [English 🇺🇸](https://github.com/0netervezer0/Omega-DPI-Bypass/blob/main/README.md)  |  [فارسی (Persian) 🇮🇷](https://github.com/0netervezer0/Omega-DPI-Bypass/blob/main/docs/README_fa.md)
 Это поможет вам избавиться от блокировки YouTube или Discord в таких странах, как Россия, Иран и других странах, где эти сервисы заблокированы технологией DPI.
