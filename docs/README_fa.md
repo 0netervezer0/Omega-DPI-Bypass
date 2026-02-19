@@ -1,4 +1,4 @@
-# Omega DPI Bypass
+# Omega DPI Bypass (NOT RELEVANT)
 #### [English 🇺🇸](https://github.com/0netervezer0/Omega-DPI-Bypass/blob/main/README.md)  |  [Русский (Russian) 🇷🇺](https://github.com/0netervezer0/Omega-DPI-Bypass/blob/main/docs/README_ru.md)
 ## ابزار دور زدن ساده و راحت DPI
 این به شما کمک می کند تا در کشورهایی مانند روسیه ، ایران و سایر کشورهایی که این خدمات توسط فناوری DPI مسدود شده است ، از شر YouTube یا Discord خلاص شوید.
