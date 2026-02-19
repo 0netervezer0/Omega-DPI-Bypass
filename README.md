@@ -1,4 +1,4 @@
-# Omega DPI Bypass
+# Omega DPI Bypass (NOT RELEVANT)
 ## A simple and convenient tool for bypassing DPI on Windows
 #### [Русский (Russian) 🇷🇺](https://github.com/0netervezer0/Omega-DPI-Bypass/blob/main/docs/README_ru.md)  |  [فارسی (Persian) 🇮🇷](https://github.com/0netervezer0/Omega-DPI-Bypass/blob/main/docs/README_fa.md)
 
