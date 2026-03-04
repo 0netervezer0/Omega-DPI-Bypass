@@ -34,7 +34,7 @@ app.setQuitOnLastWindowClosed( False )
 
 
 #bypass start/stop functions
-def is_proc_running():
+def is_proc_running() -> bool:
     for proc in psutil.process_iter( ['name'] ):
         try:
             if proc.info['name'] and proc.info['name'].lower() == PROC_NAME:
@@ -44,7 +44,7 @@ def is_proc_running():
 
     return False
 
-def stop_proc():
+def stop_proc() -> None:
     for proc in psutil.process_iter( ['name'] ):
         try:
             if proc.info['name'] and proc.info['name'].lower() == PROC_NAME:
@@ -52,23 +52,23 @@ def stop_proc():
         except ( psutil.NoSuchProcess, psutil.AccessDenied ):
             pass
 
-def update_ui():
+def update_ui() -> None:
     running = is_proc_running()
     if running:
-        main_window.btn_start.setText("Stop the Bypass")
-        main_window.btn_start.setEnabled(True)
-        tray.start_action.setText("Stop the Bypass")
-        tray.start_action.setEnabled(True)
-        tray.stat_label.setText("Bypass is ON")
+        main_window.btn_start.setText( "Stop the Bypass" )
+        main_window.btn_start.setEnabled( True )
+        tray.start_action.setText( "Stop the Bypass" )
+        tray.start_action.setEnabled( True )
+        tray.stat_label.setText( "Bypass is ON" )
 
     else:
-        main_window.btn_start.setText("Start the Bypass")
-        tray.start_action.setText("Start the Bypass")
-        tray.stat_label.setText("Bypass is OFF")
+        main_window.btn_start.setText( "Start the Bypass" )
+        tray.start_action.setText( "Start the Bypass" )
+        tray.stat_label.setText( "Bypass is OFF" )
 
 
 # window class
-class MainWindow(QMainWindow):
+class MainWindow( QMainWindow ):
     def __init__( self ):
         super().__init__()
         self.setWindowTitle( "Omega DPI Bypass" )
@@ -131,7 +131,10 @@ class MainWindow(QMainWindow):
         # on start load
         self.load_bat_files()
 
-    def start_bypass( self ):
+    def get_selected_file( self ) -> Path:
+        return self.combo.currentData()
+
+    def start_bypass( self ) -> None:
         """Launching selected .bat file with no console"""
         if is_proc_running():
             stop_proc()
@@ -156,7 +159,7 @@ class MainWindow(QMainWindow):
         except Exception as e:
             print( "Error starting bypass:", e )
 
-    def load_bat_files( self ):
+    def load_bat_files( self ) -> None:
         """Looking for all .bat files in the bypass folder"""
         current_selection = self.combo.currentText()
         self.combo.clear()
@@ -174,10 +177,7 @@ class MainWindow(QMainWindow):
         else:
             self.combo.addItem( "No ways to bypass, try to check for updates...", None )
 
-    def get_selected_file( self ):
-        return self.combo.currentData()
-
-    def check_updates( self ):
+    def check_updates( self ) -> None:
         """Getting the uptodate binaries from git repository"""
         repo_dir = Path.cwd() / "zapret-discord-youtube"
 
@@ -214,7 +214,7 @@ class MainWindow(QMainWindow):
                 f"Maybe git is not installed. Install it at https://git-scm.com/install/windows."
             )
 
-    def service( self ):
+    def service( self ) -> None:
         try:
             os.system( 'start /zapret-discord-youtube/service.bat' )
         except:
@@ -224,10 +224,10 @@ class MainWindow(QMainWindow):
                 f"Maybe there is no binary files. Try to check for updates."
             )
 
-    def open_manual( self ):
+    def open_manual( self ) -> None:
         return
 
-    def open_repo( self ):
+    def open_repo( self ) -> None:
         return
 
 main_window = MainWindow()
