@@ -1,0 +1,75 @@
+QPushButton {
+    background-color: #252525;
+    border: 1px solid #333333;
+    border-radius: 3px;
+    padding: 8px 16px;
+    color: #cccccc;
+    font-weight: normal;
+    min-height: 20px;
+}
+
+QPushButton:hover {
+    background-color: #2a2a2a;
+    border-color: #404040;
+}
+
+QPushButton:pressed {
+    background-color: #1f1f1f;
+    border-color: #4a90e2;
+}
+
+QPushButton:disabled {
+    background-color: #202020;
+    color: #4a4a4a;
+    border-color: #2a2a2a;
+}
+
+QPushButton#refresh_btn {
+    padding: 4px;
+    min-width: 28px;
+    min-height: 28px;
+    max-width: 28px;
+    max-height: 28px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Tray menu */
+QMenu {
+    background-color: #252525;
+    border: 1px solid #333333;
+    padding: 2px;
+}
+
+QMenu::item {
+    padding: 6px 24px 6px 12px;
+    color: #cccccc;
+}
+
+QMenu::item:selected {
+    background-color: #4a90e2;
+    color: #ffffff;
+}
+
+QMenu::item:disabled {
+    color: #4a4a4a;
+}
+
+QMenu::separator {
+    height: 1px;
+    background-color: #333333;
+    margin: 4px 0;
+}
+
+/* Message Box */
+QMessageBox {
+    background-color: #1a1a1a;
+}
+
+QMessageBox QLabel {
+    color: #cccccc;
+}
+
+QMessageBox QPushButton {
+    min-width: 80px;
+}

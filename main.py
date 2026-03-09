@@ -32,6 +32,12 @@ BYPASS_RUNNING = False
 app = QApplication( sys.argv )
 app.setQuitOnLastWindowClosed( False )
 
+# loading styles
+style_path = Path( __file__ ).parent / 'style.qss'
+if style_path.exists():
+    with open( style_path, 'r', encoding = 'utf-8' ) as f:
+        app.setStyleSheet( f.read() )
+
 
 #bypass start/stop functions
 def is_proc_running() -> bool:
@@ -73,7 +79,7 @@ class MainWindow( QMainWindow ):
         super().__init__()
         self.setWindowTitle( "Omega DPI Bypass" )
         self.setWindowIcon( QIcon( 'sources/icon.png' ))
-        self.resize( 320, 160 )
+        self.setFixedSize( 360, 300 )
 
         central = QWidget()
         self.setCentralWidget( central )
@@ -95,13 +101,14 @@ class MainWindow( QMainWindow ):
 
         # combo box
         self.combo = QComboBox()
-        combo_layout.addWidget(self.combo)
+        self.combo.setFixedHeight( 40 )
+        combo_layout.addWidget( self.combo )
 
         # update list button
         self.refresh_btn = QPushButton( "⟳" )
         self.refresh_btn.setIcon( QIcon( "sources/refresh.png" ))
         self.refresh_btn.setText( '' )
-        self.refresh_btn.setFixedSize(28, 28)
+        self.refresh_btn.setFixedWidth( 28 )
         self.refresh_btn.setToolTip( "Update List" )
         combo_layout.addWidget( self.refresh_btn )
 
@@ -168,7 +175,8 @@ class MainWindow( QMainWindow ):
         bat_files = list( base_dir.glob( "*.bat" ))
         if bat_files:
             for file in bat_files:
-                self.combo.addItem( file.stem, file )
+                if file.stem != 'service':
+                    self.combo.addItem( file.stem, file )
 
             index = self.combo.findText( current_selection )
             if index >= 0:
@@ -183,7 +191,7 @@ class MainWindow( QMainWindow ):
 
         try:
             if repo_dir.exists():
-                shutil.rmtree(repo_dir)
+                shutil.rmtree( repo_dir )
 
             result = subprocess.run(
                 ["git", "clone", REPO_URL],
@@ -216,7 +224,7 @@ class MainWindow( QMainWindow ):
 
     def service( self ) -> None:
         try:
-            os.system( 'start /zapret-discord-youtube/service.bat' )
+            os.system( 'cd /zapret-discord-youtube/ && start service.bat' )
         except:
             QMessageBox.critical(
                 self,
